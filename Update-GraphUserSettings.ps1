@@ -51,9 +51,16 @@ param
     [Parameter(Mandatory=$true)][bool]$ContributionToContentDiscoveryDisabled
 )
 
+if(!(get-package Microsoft.IdentityModel.Clients.ActiveDirectory -RequiredVersion 3.19.8))
+{
+Install-Package Microsoft.IdentityModel.Clients.ActiveDirectory -RequiredVersion 3.19.8 -Source 'https://www.nuget.org/api/v2' -Scope CurrentUser
+}
+
 # https://www.nuget.org/packages/Microsoft.IdentityModel.Clients.ActiveDirectory/ 
-Add-Type -Path "C:\Packages\microsoft.identitymodel.clients.activedirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
-Add-Type -Path "C:\Packages\microsoft.identitymodel.clients.activedirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll"
+$package = Get-Package "Microsoft.IdentityModel.Clients.ActiveDirectory"
+$packagePath = Split-Path $package.Source -Parent
+$dllPath = Join-Path -Path $packagePath -ChildPath "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
+Add-Type -Path $dllPath -ErrorAction Stop
 
 function Get-Token
 {
