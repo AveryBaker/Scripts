@@ -18,7 +18,7 @@
 #>
 
 <#
- .SYNOPSIS
+  .SYNOPSIS
   Script to report and update on the Delve ContributionToContentDiscoveryDisabled setting for all tenant users (excluding guest accounts).
 
  .DESCRIPTION
@@ -35,7 +35,7 @@
 
  .EXAMPLE
   .\Update-GraphUserSettings.ps1 -ContributionToContentDiscoveryDisabled $true -ReportOnly
-
+ 
   Generate a CSV report of all users which currently have the ContributionToContentDiscoveryDisabled set to FALSE.
 
  .EXAMPLE
@@ -56,8 +56,8 @@ if(!(get-package Microsoft.IdentityModel.Clients.ActiveDirectory -RequiredVersio
 Install-Package Microsoft.IdentityModel.Clients.ActiveDirectory -RequiredVersion 3.19.8 -Source 'https://www.nuget.org/api/v2' -Scope CurrentUser
 }
 
-# https://www.nuget.org/packages/Microsoft.IdentityModel.Clients.ActiveDirectory/ 
-$package = Get-Package "Microsoft.IdentityModel.Clients.ActiveDirectory"
+# https://www.nuget.org/p ackages/Microsoft.IdentityModel.Clients.ActiveDirectory/ 
+$package = Get-Package Microsoft.IdentityModel.Clients.ActiveDirectory -RequiredVersion 3.19.8
 $packagePath = Split-Path $package.Source -Parent
 $dllPath = Join-Path -Path $packagePath -ChildPath "lib/net45/Microsoft.IdentityModel.Clients.ActiveDirectory.dll"
 Add-Type -Path $dllPath -ErrorAction Stop
